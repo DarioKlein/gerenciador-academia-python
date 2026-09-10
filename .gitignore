@@ -28,3 +28,6 @@ desktop.ini
 # Arquivos de dados gerados em execução (mantendo a pasta data através do .gitkeep)
 data/*
 !data/.gitkeep
+
+# Contexto local para agentes de desenvolvimento
+AGENTS.md

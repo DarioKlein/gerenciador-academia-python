@@ -1,4 +1,11 @@
-class ValidadorTexto:
+class Validador:
     @staticmethod
-    def eh_valido(texto):
-        return all(c.isalpha() or c.isspace() for c in texto)
+    def texto_e_valido(texto: str):
+        return (
+            bool(texto.strip())
+            and any(caractere.isalpha() for caractere in texto)
+            and all(
+                caractere.isalpha() or caractere.isspace() or caractere == "'"
+                for caractere in texto
+            )
+        )
