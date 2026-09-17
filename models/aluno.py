@@ -3,7 +3,6 @@ from utils import Validador
 
 
 class Aluno:
-
     def __init__(
         self,
         codigo: int,
@@ -17,6 +16,15 @@ class Aluno:
         self.data_nascimento = data_nascimento
         self.peso = peso
         self.altura = altura
+
+    def para_dict(self):
+        return {
+            "codigo": self.codigo,
+            "nome": self.nome,
+            "data_nascimento": self.data_nascimento.isoformat(),
+            "peso": self.peso,
+            "altura": self.altura,
+        }
 
     @property
     def codigo(self):

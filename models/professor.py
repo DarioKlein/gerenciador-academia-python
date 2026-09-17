@@ -8,6 +8,14 @@ class Professor:
         self.endereco = endereco
         self.telefone = telefone
 
+    def para_dict(self):
+        return {
+            "codigo": self.codigo,
+            "nome": self.nome,
+            "endereco": self.endereco,
+            "telefone": self.telefone,
+        }
+
     @property
     def codigo(self):
         return self.__codigo

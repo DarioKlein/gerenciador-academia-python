@@ -11,6 +11,14 @@ class Matricula:
         self.cod_modalidade = cod_modalidade
         self.qtde_aulas = qtde_aulas
 
+    def para_dict(self):
+        return {
+            "codigo": self.codigo,
+            "cod_aluno": self.cod_aluno,
+            "cod_modalidade": self.cod_modalidade,
+            "qtde_aulas": self.qtde_aulas,
+        }
+
     @property
     def codigo(self):
         return self.__codigo

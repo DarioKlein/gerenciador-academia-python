@@ -18,6 +18,16 @@ class Modalidade:
         self.limite_alunos = limite_alunos
         self.total_alunos = total_alunos
 
+    def para_dict(self):
+        return {
+            "codigo": self.codigo,
+            "descricao": self.descricao,
+            "cod_prof": self.cod_prof,
+            "valor_aula": self.valor_aula,
+            "limite_alunos": self.limite_alunos,
+            "total_alunos": self.total_alunos,
+        }
+
     @property
     def codigo(self):
         return self.__codigo
