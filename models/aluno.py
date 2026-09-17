@@ -26,6 +26,16 @@ class Aluno:
             "altura": self.altura,
         }
 
+    @classmethod
+    def de_dict(cls, registro: dict):
+        return cls(
+            registro["codigo"],
+            registro["nome"],
+            date.fromisoformat(registro["data_nascimento"]),
+            registro["peso"],
+            registro["altura"],
+        )
+
     @property
     def codigo(self):
         return self.__codigo
