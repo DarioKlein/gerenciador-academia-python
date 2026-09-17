@@ -19,6 +19,7 @@ class Repositorio:
 
     def reconstruir_indice(self) -> None:
         self.raiz = None
+
         with open(self.caminho, "r", encoding="utf-8") as arquivo:
             while True:
                 posicao = arquivo.tell()
@@ -34,13 +35,13 @@ class Repositorio:
                 codigo = dados["codigo"]
                 self.raiz = ArvoreBinaria.incluir(self.raiz, codigo, posicao)
 
-    def incluir(self, dados: dict):
-        codigo = dados["codigo"]
+    def incluir(self, registro: dict) -> dict:
+        codigo = registro["codigo"]
 
         if ArvoreBinaria.buscar(self.raiz, codigo) is not None:
             raise ValueError("Já existe um registro com este código")
 
-        linha = json.dumps(dados, ensure_ascii=False)
+        linha = json.dumps(registro, ensure_ascii=False)
 
         with open(self.caminho, "a", encoding="utf-8") as arquivo:
             posicao = arquivo.tell()
@@ -48,42 +49,31 @@ class Repositorio:
 
         self.raiz = ArvoreBinaria.incluir(self.raiz, codigo, posicao)
 
-    def buscar(self, codigo: int):
+        return registro
+
+    def buscar(self, codigo: int) -> dict | None:
         no = ArvoreBinaria.buscar(self.raiz, codigo)
 
         if no is None:
-            raise ValueError("O código para busca não foi encontrado")
+            return None
 
         with open(self.caminho, "r", encoding="utf-8") as arquivo:
             arquivo.seek(no.posicao)
             linha = arquivo.readline()
-            dado = json.loads(linha[2:])
+            registro = json.loads(linha[2:])
 
-        return dado
+        return registro
 
-    def excluir(self, codigo: int):
-        no = ArvoreBinaria.buscar(self.raiz, codigo)
-        if no is None:
-            raise ValueError("O código para exclusão não foi encontrado")
-
-        with open(self.caminho, "r+", encoding="utf-8") as arquivo:
-            arquivo.seek(no.posicao)
-            arquivo.write("0")
-
-        self.raiz = ArvoreBinaria.excluir(self.raiz, codigo)
-
-        return True
-
-    def atualizar(self, codigo, novos_dados: dict):
+    def atualizar(self, codigo, registro_atualizado: dict) -> dict:
         no = ArvoreBinaria.buscar(self.raiz, codigo)
 
         if no is None:
             raise ValueError("O registro passado para atualização não existe")
 
-        if novos_dados["codigo"] != codigo:
+        if registro_atualizado["codigo"] != codigo:
             raise ValueError("O código do registro não pode ser alterado")
 
-        linha = json.dumps(novos_dados, ensure_ascii=False)
+        linha = json.dumps(registro_atualizado, ensure_ascii=False)
 
         with open(self.caminho, "r+", encoding="utf-8") as arquivo:
             arquivo.seek(0, 2)
@@ -95,4 +85,22 @@ class Repositorio:
             arquivo.write("0")
         no.posicao = nova_posicao
 
-        return True
+        return registro_atualizado
+
+    def excluir(self, codigo: int) -> dict:
+        no = ArvoreBinaria.buscar(self.raiz, codigo)
+
+        if no is None:
+            raise ValueError("O código para exclusão não foi encontrado")
+
+        with open(self.caminho, "r+", encoding="utf-8") as arquivo:
+            arquivo.seek(no.posicao)
+            linha = arquivo.readline()
+            registro_excluido = json.loads(linha[2:])
+
+            arquivo.seek(no.posicao)
+            arquivo.write("0")
+
+        self.raiz = ArvoreBinaria.excluir(self.raiz, codigo)
+
+        return registro_excluido
