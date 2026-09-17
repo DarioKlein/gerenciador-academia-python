@@ -17,6 +17,23 @@ class Aluno:
         self.peso = peso
         self.altura = altura
 
+    def calcular_imc(self):
+        imc = self.peso / (self.altura * self.altura)
+
+        match True:
+            case _ if imc < 18.5:
+                return "Abaixo do Peso"
+            case _ if imc < 25:
+                return "Peso normal"
+            case _ if imc < 30:
+                return "Sobrepeso"
+            case _ if imc < 35:
+                return "Obesidade grau I"
+            case _ if imc < 40:
+                return "Obesidade grau II"
+            case _:
+                return "Obesidade grau III  "
+
     def para_dict(self):
         return {
             "codigo": self.codigo,
