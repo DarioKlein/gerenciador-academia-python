@@ -17,7 +17,7 @@ class Aluno:
         self.peso = peso
         self.altura = altura
 
-    def calcular_imc(self):
+    def diagnosticar_imc(self):
         imc = self.peso / (self.altura * self.altura)
 
         match True:
