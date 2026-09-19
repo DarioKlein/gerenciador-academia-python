@@ -16,6 +16,15 @@ class Professor:
             "telefone": self.telefone,
         }
 
+    @classmethod
+    def dict_para_objeto(cls, registro: dict):
+        return cls(
+            registro["codigo"],
+            registro["nome"],
+            registro["endereco"],
+            registro["telefone"],
+        )
+
     @property
     def codigo(self):
         return self.__codigo
