@@ -21,7 +21,7 @@ class ProfessorService:
 
     def buscar(self, codigo: int) -> Professor | None:
         if not isinstance(codigo, int):
-            raise TypeError("O codigo informado é inválido")
+            raise TypeError("O código informado é inválido")
 
         registro = self.__repositorio_professores.buscar(codigo)
 
@@ -32,7 +32,7 @@ class ProfessorService:
 
     def atualizar(self, codigo: int, professor_atualizado: Professor) -> Professor:
         if not isinstance(codigo, int):
-            raise TypeError("O codigo informado é inválido")
+            raise TypeError("O código informado é inválido")
 
         if not isinstance(professor_atualizado, Professor):
             raise TypeError("O professor informado é inválido")
@@ -43,7 +43,7 @@ class ProfessorService:
 
     def excluir(self, codigo: int) -> Professor:
         if not isinstance(codigo, int):
-            raise TypeError("O codigo informado é inválido")
+            raise TypeError("O código informado é inválido")
 
         registro_excluido = self.__repositorio_professores.excluir(codigo)
 
