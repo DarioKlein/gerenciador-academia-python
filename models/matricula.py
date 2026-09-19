@@ -19,6 +19,15 @@ class Matricula:
             "qtde_aulas": self.qtde_aulas,
         }
 
+    @classmethod
+    def dict_para_objeto(cls, registro: dict):
+        return cls(
+            registro["codigo"],
+            registro["cod_aluno"],
+            registro["cod_modalidade"],
+            registro["qtde_aulas"],
+        )
+
     @property
     def codigo(self):
         return self.__codigo

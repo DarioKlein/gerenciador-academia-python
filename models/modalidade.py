@@ -28,6 +28,17 @@ class Modalidade:
             "total_alunos": self.total_alunos,
         }
 
+    @classmethod
+    def dict_para_objeto(cls, registro: dict):
+        return cls(
+            registro["codigo"],
+            registro["descricao"],
+            registro["cod_prof"],
+            registro["valor_aula"],
+            registro["limite_alunos"],
+            registro["total_alunos"],
+        )
+
     @property
     def codigo(self):
         return self.__codigo
