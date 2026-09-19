@@ -44,7 +44,7 @@ class Aluno:
         }
 
     @classmethod
-    def de_dict(cls, registro: dict):
+    def dict_para_objeto(cls, registro: dict):
         return cls(
             registro["codigo"],
             registro["nome"],
