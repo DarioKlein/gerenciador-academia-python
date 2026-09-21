@@ -64,6 +64,17 @@ class Repositorio:
 
         return registro
 
+    def listar(self) -> list[dict]:
+        registros = []
+
+        with open(self.caminho, "r", encoding="utf-8") as arquivo:
+            for linha in arquivo:
+                if linha.startswith("1|"):
+                    registro = json.loads(linha[2:])
+                    registros.append(registro)
+
+        return registros
+
     def atualizar(self, codigo, registro_atualizado: dict) -> dict:
         no = ArvoreBinaria.buscar(self.raiz, codigo)
 
