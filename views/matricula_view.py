@@ -1,0 +1,2 @@
+class MatriculaView:
+    pass

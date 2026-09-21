@@ -1,0 +1,2 @@
+class ModalidadeView:
+    pass
