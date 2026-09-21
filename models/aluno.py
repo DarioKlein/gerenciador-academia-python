@@ -17,8 +17,11 @@ class Aluno:
         self.peso = peso
         self.altura = altura
 
-    def diagnosticar_imc(self):
-        imc = self.peso / (self.altura * self.altura)
+    def calcular_imc(self) -> float:
+        return self.peso / (self.altura * self.altura)
+
+    def diagnosticar_imc(self) -> str:
+        imc = self.calcular_imc()
 
         match True:
             case _ if imc < 18.5:
@@ -32,7 +35,7 @@ class Aluno:
             case _ if imc < 40:
                 return "Obesidade grau II"
             case _:
-                return "Obesidade grau III  "
+                return "Obesidade grau III"
 
     def para_dict(self):
         return {
