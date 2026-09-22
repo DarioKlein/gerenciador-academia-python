@@ -5,6 +5,7 @@ import customtkinter as ctk
 
 from models import Aluno
 from services import AlunoService
+from utils import Conversor, Formatador
 
 
 class AlunoView(ctk.CTkFrame):
@@ -169,8 +170,8 @@ class AlunoView(ctk.CTkFrame):
             "codigo": str(aluno.codigo),
             "nome": aluno.nome,
             "data_nascimento": aluno.data_nascimento.strftime("%d/%m/%Y"),
-            "peso": str(aluno.peso).replace(".", ","),
-            "altura": str(aluno.altura).replace(".", ","),
+            "peso": Formatador.decimal(aluno.peso),
+            "altura": Formatador.decimal(aluno.altura),
         }
 
         for chave, valor in valores.items():
@@ -178,7 +179,9 @@ class AlunoView(ctk.CTkFrame):
             campo.insert(0, valor)
 
     def __obter_aluno_formulario(self) -> Aluno:
-        codigo = self.__converter_codigo(self.__campos_formulario["codigo"].get())
+        codigo = Conversor.para_inteiro(
+            self.__campos_formulario["codigo"].get(), "o código do aluno"
+        )
         nome = self.__campos_formulario["nome"].get().strip()
         data_texto = self.__campos_formulario["data_nascimento"].get().strip()
 
@@ -187,37 +190,18 @@ class AlunoView(ctk.CTkFrame):
         except ValueError as erro:
             raise ValueError("Informe a data no formato dd/mm/aaaa") from erro
 
-        peso = self.__converter_decimal(self.__campos_formulario["peso"].get(), "peso")
-        altura = self.__converter_decimal(
-            self.__campos_formulario["altura"].get(), "altura"
+        peso = Conversor.para_decimal(self.__campos_formulario["peso"].get(), "o peso")
+        altura = Conversor.para_decimal(
+            self.__campos_formulario["altura"].get(), "a altura"
         )
 
         return Aluno(codigo, nome, data_nascimento, peso, altura)
-
-    @staticmethod
-    def __converter_codigo(texto: str) -> int:
-        texto = texto.strip()
-
-        if not texto:
-            raise ValueError("Informe o código do aluno")
-
-        try:
-            return int(texto)
-        except ValueError as erro:
-            raise ValueError("O código deve ser um número inteiro") from erro
-
-    @staticmethod
-    def __converter_decimal(texto: str, nome_campo: str) -> float:
-        try:
-            return float(texto.strip().replace(",", "."))
-        except ValueError as erro:
-            raise ValueError(f"O {nome_campo} deve ser um número válido") from erro
 
     def __obter_codigo_busca(self) -> int:
         if self.__campo_busca is None:
             raise ValueError("O campo de busca não está disponível")
 
-        return self.__converter_codigo(self.__campo_busca.get())
+        return Conversor.para_inteiro(self.__campo_busca.get(), "o código do aluno")
 
     def __buscar_aluno(self) -> Aluno:
         aluno = self.__aluno_service.buscar(self.__obter_codigo_busca())
@@ -348,9 +332,9 @@ class AlunoView(ctk.CTkFrame):
             ("Código", str(aluno.codigo)),
             ("Nome", aluno.nome),
             ("Data de nascimento", aluno.data_nascimento.strftime("%d/%m/%Y")),
-            ("Peso", f"{aluno.peso:.2f} kg".replace(".", ",")),
-            ("Altura", f"{aluno.altura:.2f} m".replace(".", ",")),
-            ("IMC", f"{aluno.calcular_imc():.2f}".replace(".", ",")),
+            ("Peso", f"{Formatador.decimal(aluno.peso)} kg"),
+            ("Altura", f"{Formatador.decimal(aluno.altura)} m"),
+            ("IMC", Formatador.decimal(aluno.calcular_imc())),
             ("Diagnóstico", aluno.diagnosticar_imc()),
         )
 

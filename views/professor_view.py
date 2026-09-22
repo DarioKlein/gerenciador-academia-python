@@ -1,10 +1,10 @@
-from datetime import datetime
 from tkinter import messagebox
 
 import customtkinter as ctk
 
 from models import Professor
 from services import ProfessorService
+from utils import Conversor, Formatador
 
 
 class ProfessorView(ctk.CTkFrame):
@@ -176,37 +176,20 @@ class ProfessorView(ctk.CTkFrame):
             campo.insert(0, valor)
 
     def __obter_professor_formulario(self) -> Professor:
-        codigo = self.__converter_codigo(self.__campos_formulario["codigo"].get())
+        codigo = Conversor.para_inteiro(
+            self.__campos_formulario["codigo"].get(), "o código do professor"
+        )
         nome = self.__campos_formulario["nome"].get().strip()
         endereco = self.__campos_formulario["endereco"].get().strip()
         telefone = self.__campos_formulario["telefone"].get().strip()
 
         return Professor(codigo, nome, endereco, telefone)
 
-    @staticmethod
-    def __converter_codigo(texto: str) -> int:
-        texto = texto.strip()
-
-        if not texto:
-            raise ValueError("Informe o código do professor")
-
-        try:
-            return int(texto)
-        except ValueError as erro:
-            raise ValueError("O código deve ser um número inteiro") from erro
-
-    @staticmethod
-    def __converter_decimal(texto: str, nome_campo: str) -> float:
-        try:
-            return float(texto.strip().replace(",", "."))
-        except ValueError as erro:
-            raise ValueError(f"O {nome_campo} deve ser um número válido") from erro
-
     def __obter_codigo_busca(self) -> int:
         if self.__campo_busca is None:
             raise ValueError("O campo de busca não está disponível")
 
-        return self.__converter_codigo(self.__campo_busca.get())
+        return Conversor.para_inteiro(self.__campo_busca.get(), "o código do professor")
 
     def __buscar_professor(self) -> Professor:
         professor = self.__professor_service.buscar(self.__obter_codigo_busca())
@@ -337,7 +320,7 @@ class ProfessorView(ctk.CTkFrame):
             ("Código", str(professor.codigo)),
             ("Nome", professor.nome),
             ("Endereço", professor.endereco),
-            ("Telefone", f"{professor.telefone}"),
+            ("Telefone", Formatador.telefone(professor.telefone)),
         )
 
         for linha, (rotulo, valor) in enumerate(dados):
