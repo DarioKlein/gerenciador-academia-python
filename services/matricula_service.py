@@ -46,6 +46,12 @@ class MatriculaService:
         if registro_modalidade is None:
             raise ValueError("A modalidade informada não foi encontrada")
 
+        if self.__aluno_ja_matriculado(
+            matricula.cod_aluno,
+            matricula.cod_modalidade,
+        ):
+            raise ValueError("O aluno já está matriculado nesta modalidade")
+
         if registro_modalidade["total_alunos"] >= registro_modalidade["limite_alunos"]:
             raise ValueError(
                 "A modalidade informada não possui vagas disponíveis para matrícula"
@@ -97,18 +103,67 @@ class MatriculaService:
         if not isinstance(matricula_atualizada, Matricula):
             raise TypeError("A matrícula informada é inválida")
 
+        registro_matricula_antiga = self.__repositorio_matriculas.buscar(codigo)
+
+        if registro_matricula_antiga is None:
+            raise ValueError("A matrícula informada não existe")
+
+        if registro_matricula_antiga["cod_aluno"] != matricula_atualizada.cod_aluno:
+            raise ValueError("O aluno de uma matrícula não pode ser alterado")
+
         if self.__repositorio_alunos.buscar(matricula_atualizada.cod_aluno) is None:
             raise ValueError("O aluno informado não foi encontrado")
 
-        if (
-            self.__repositorio_modalidades.buscar(matricula_atualizada.cod_modalidade)
-            is None
-        ):
-            raise ValueError("A modalidade informada não foi encontrada")
+        registro_modalidade_antiga = self.__repositorio_modalidades.buscar(
+            registro_matricula_antiga["cod_modalidade"]
+        )
+
+        if registro_modalidade_antiga is None:
+            raise ValueError("A modalidade da matrícula em questão não existe mais")
+
+        modalidade_foi_alterada = (
+            registro_matricula_antiga["cod_modalidade"]
+            != matricula_atualizada.cod_modalidade
+        )
+
+        if modalidade_foi_alterada:
+            registro_modalidade_nova = self.__repositorio_modalidades.buscar(
+                matricula_atualizada.cod_modalidade
+            )
+
+            if registro_modalidade_nova is None:
+                raise ValueError("A modalidade informada não foi encontrada")
+
+            if self.__aluno_ja_matriculado(
+                matricula_atualizada.cod_aluno,
+                matricula_atualizada.cod_modalidade,
+                codigo_ignorado=codigo,
+            ):
+                raise ValueError("O aluno já está matriculado nesta modalidade")
+
+            if (
+                registro_modalidade_nova["total_alunos"]
+                >= registro_modalidade_nova["limite_alunos"]
+            ):
+                raise ValueError(
+                    "A modalidade informada não possui vagas disponíveis para matrícula"
+                )
 
         self.__repositorio_matriculas.atualizar(
             codigo, matricula_atualizada.para_dict()
         )
+
+        if modalidade_foi_alterada:
+            registro_modalidade_nova["total_alunos"] += 1
+            registro_modalidade_antiga["total_alunos"] -= 1
+
+            self.__repositorio_modalidades.atualizar(
+                registro_modalidade_nova["codigo"], registro_modalidade_nova
+            )
+
+            self.__repositorio_modalidades.atualizar(
+                registro_modalidade_antiga["codigo"], registro_modalidade_antiga
+            )
 
         return matricula_atualizada
 
@@ -137,3 +192,43 @@ class MatriculaService:
         )
 
         return Matricula.dict_para_objeto(registro_matricula)
+
+    def __aluno_ja_matriculado(
+        self,
+        cod_aluno: int,
+        cod_modalidade: int,
+        codigo_ignorado: int | None = None,
+    ) -> bool:
+        for registro in self.__repositorio_matriculas.listar():
+            if registro["codigo"] == codigo_ignorado:
+                continue
+
+            if (
+                registro["cod_aluno"] == cod_aluno
+                and registro["cod_modalidade"] == cod_modalidade
+            ):
+                return True
+
+        return False
+
+    def buscar_aluno(self, codigo: int) -> Aluno | None:
+        if not isinstance(codigo, int):
+            raise TypeError("O código do aluno informado é inválido")
+
+        registro = self.__repositorio_alunos.buscar(codigo)
+
+        if registro is None:
+            return None
+
+        return Aluno.dict_para_objeto(registro)
+
+    def buscar_modalidade(self, codigo: int) -> Modalidade | None:
+        if not isinstance(codigo, int):
+            raise TypeError("O código da modalidade informado é inválido")
+
+        registro = self.__repositorio_modalidades.buscar(codigo)
+
+        if registro is None:
+            return None
+
+        return Modalidade.dict_para_objeto(registro)
