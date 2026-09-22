@@ -77,3 +77,14 @@ class ModalidadeService:
         registro_excluido = self.__repositorio_modalidades.excluir(codigo)
 
         return Modalidade.dict_para_objeto(registro_excluido)
+
+    def buscar_professor(self, codigo: int) -> Professor | None:
+        if not isinstance(codigo, int):
+            raise TypeError("O código do professor informado é inválido")
+
+        registro = self.__repositorio_professores.buscar(codigo)
+
+        if registro is None:
+            return None
+
+        return Professor.dict_para_objeto(registro)
