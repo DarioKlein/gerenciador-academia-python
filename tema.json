@@ -1,0 +1,154 @@
+{
+  "CTk": {
+    "fg_color": ["gray95", "gray10"]
+  },
+  "CTkToplevel": {
+    "fg_color": ["gray95", "gray10"]
+  },
+  "CTkFrame": {
+    "corner_radius": 8,
+    "border_width": 0,
+    "fg_color": ["gray90", "gray13"],
+    "top_fg_color": ["gray85", "gray16"],
+    "border_color": ["gray65", "gray28"]
+  },
+  "CTkButton": {
+    "corner_radius": 8,
+    "border_width": 0,
+    "fg_color": ["gray20", "gray85"],
+    "hover_color": ["gray35", "gray70"],
+    "border_color": ["gray60", "gray25"],
+    "text_color": ["white", "gray10"],
+    "text_color_disabled": ["gray60", "gray45"]
+  },
+  "CTkLabel": {
+    "corner_radius": 0,
+    "fg_color": "transparent",
+    "text_color": ["gray10", "gray90"]
+  },
+  "CTkEntry": {
+    "corner_radius": 8,
+    "border_width": 1,
+    "fg_color": ["white", "gray17"],
+    "border_color": ["gray70", "gray30"],
+    "text_color": ["gray10", "gray90"],
+    "placeholder_text_color": ["gray55", "gray55"]
+  },
+  "CTkCheckBox": {
+    "corner_radius": 4,
+    "border_width": 2,
+    "fg_color": ["gray20", "gray85"],
+    "border_color": ["gray60", "gray35"],
+    "hover_color": ["gray35", "gray70"],
+    "checkmark_color": ["white", "gray10"],
+    "text_color": ["gray10", "gray90"],
+    "text_color_disabled": ["gray60", "gray45"]
+  },
+  "CTkSwitch": {
+    "corner_radius": 1000,
+    "border_width": 3,
+    "button_length": 0,
+    "fg_color": ["gray70", "gray35"],
+    "progress_color": ["gray20", "gray85"],
+    "button_color": ["gray95", "gray98"],
+    "button_hover_color": ["white", "white"],
+    "text_color": ["gray10", "gray90"],
+    "text_color_disabled": ["gray60", "gray45"]
+  },
+  "CTkRadioButton": {
+    "corner_radius": 1000,
+    "border_width_checked": 6,
+    "border_width_unchecked": 2,
+    "fg_color": ["gray20", "gray85"],
+    "border_color": ["gray60", "gray35"],
+    "hover_color": ["gray35", "gray70"],
+    "text_color": ["gray10", "gray90"],
+    "text_color_disabled": ["gray60", "gray45"]
+  },
+  "CTkProgressBar": {
+    "corner_radius": 1000,
+    "border_width": 0,
+    "fg_color": ["gray80", "gray25"],
+    "progress_color": ["gray20", "gray85"],
+    "border_color": ["gray60", "gray35"]
+  },
+  "CTkSlider": {
+    "corner_radius": 1000,
+    "button_corner_radius": 1000,
+    "border_width": 6,
+    "fg_color": ["gray80", "gray25"],
+    "progress_color": ["gray50", "gray55"],
+    "button_color": ["gray20", "gray85"],
+    "button_hover_color": ["gray35", "gray70"]
+  },
+  "CTkOptionMenu": {
+    "corner_radius": 8,
+    "fg_color": ["gray20", "gray85"],
+    "button_color": ["gray30", "gray75"],
+    "button_hover_color": ["gray40", "gray65"],
+    "text_color": ["white", "gray10"],
+    "text_color_disabled": ["gray70", "gray40"]
+  },
+  "CTkComboBox": {
+    "corner_radius": 8,
+    "border_width": 1,
+    "fg_color": ["white", "gray17"],
+    "border_color": ["gray70", "gray30"],
+    "button_color": ["gray70", "gray30"],
+    "button_hover_color": ["gray55", "gray40"],
+    "text_color": ["gray10", "gray90"],
+    "text_color_disabled": ["gray60", "gray45"]
+  },
+  "CTkScrollbar": {
+    "corner_radius": 1000,
+    "border_spacing": 4,
+    "fg_color": "transparent",
+    "button_color": ["gray70", "gray35"],
+    "button_hover_color": ["gray55", "gray45"]
+  },
+  "CTkSegmentedButton": {
+    "corner_radius": 8,
+    "border_width": 2,
+    "fg_color": ["gray80", "gray25"],
+    "selected_color": ["gray20", "gray85"],
+    "selected_hover_color": ["gray35", "gray70"],
+    "unselected_color": ["gray80", "gray25"],
+    "unselected_hover_color": ["gray70", "gray35"],
+    "text_color": ["white", "gray10"],
+    "text_color_disabled": ["gray70", "gray40"]
+  },
+  "CTkTextbox": {
+    "corner_radius": 8,
+    "border_width": 0,
+    "fg_color": ["white", "gray17"],
+    "border_color": ["gray70", "gray30"],
+    "text_color": ["gray10", "gray90"],
+    "scrollbar_button_color": ["gray70", "gray35"],
+    "scrollbar_button_hover_color": ["gray55", "gray45"]
+  },
+  "CTkScrollableFrame": {
+    "label_fg_color": ["gray85", "gray16"]
+  },
+  "DropdownMenu": {
+    "fg_color": ["gray95", "gray15"],
+    "hover_color": ["gray80", "gray25"],
+    "text_color": ["gray10", "gray90"]
+  },
+  "CTkFont": {
+    "macOS": {
+      "family": "SF Display",
+      "size": 13,
+      "weight": "normal"
+    },
+    "Windows": {
+      "family": "Segoe UI",
+      "size": 14,
+      "weight": "normal"
+    },
+    "Linux": {
+      "family": "Roboto",
+      "size": 14,
+      "weight": "normal"
+    }
+  }
+}

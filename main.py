@@ -11,7 +11,7 @@ from services import (
 from views import PrincipalView
 
 ctk.set_appearance_mode("system")
-ctk.set_default_color_theme("blue")
+ctk.set_default_color_theme("tema.json")
 
 repositorio_alunos = Repositorio(TipoRepositorio.ALUNO)
 repositorio_professores = Repositorio(TipoRepositorio.PROFESSOR)
