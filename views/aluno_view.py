@@ -48,6 +48,9 @@ class AlunoView(ctk.CTkFrame):
             values=list(self.OPERACOES),
             command=self.__selecionar_operacao,
             height=38,
+            text_color="#fff",
+            selected_color="#1a1919",
+            selected_hover_color="#1a1919",
         )
         self.__seletor_operacao.grid(
             row=1, column=0, padx=30, pady=(5, 10), sticky="ew"

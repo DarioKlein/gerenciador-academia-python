@@ -83,8 +83,9 @@ class PrincipalView(ctk.CTkFrame):
                 text=f"      {nome}",
                 anchor="w",
                 height=42,
-                fg_color="#000",
+                fg_color="#1a1919",
                 text_color="#fff",
+                hover_color="#383838",
                 command=lambda nome_view=nome: self.__mostrar_view(nome_view),
             )
             botao.grid(
@@ -155,6 +156,8 @@ class PrincipalView(ctk.CTkFrame):
 
         for nome_botao, botao in self.__botoes.items():
             if nome_botao == nome:
-                botao.configure(fg_color="#fff", text_color="#000")
+                botao.configure(
+                    border_width=1, border_color="#fff", hover_color="#1a1919"
+                )
             else:
-                botao.configure(fg_color="#000", text_color="#fff")
+                botao.configure(border_width=0, hover_color="#383838")
