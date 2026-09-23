@@ -3,8 +3,12 @@ from models import Modalidade, Professor
 
 
 class ModalidadeService:
+
     def __init__(
-        self, repositorio_modalidades: Repositorio, repositorio_professores: Repositorio
+        self,
+        repositorio_modalidades: Repositorio,
+        repositorio_professores: Repositorio,
+        repositorio_matriculas: Repositorio,
     ):
         if not isinstance(repositorio_modalidades, Repositorio):
             raise TypeError("O repositório de modalidades informado é inválido")
@@ -12,14 +16,21 @@ class ModalidadeService:
         if not isinstance(repositorio_professores, Repositorio):
             raise TypeError("O repositório de professores informado é inválido")
 
+        if not isinstance(repositorio_matriculas, Repositorio):
+            raise TypeError("O repositório de matrículas informado é inválido")
+
         if repositorio_modalidades.tipo != TipoRepositorio.MODALIDADE:
             raise ValueError("O repositório informado não é de modalidades")
 
         if repositorio_professores.tipo != TipoRepositorio.PROFESSOR:
             raise ValueError("O repositório informado não é de professores")
 
+        if repositorio_matriculas.tipo != TipoRepositorio.MATRICULA:
+            raise ValueError("O repositório informado não é de matrículas")
+
         self.__repositorio_modalidades = repositorio_modalidades
         self.__repositorio_professores = repositorio_professores
+        self.__repositorio_matriculas = repositorio_matriculas
 
     def criar(self, modalidade: Modalidade) -> Modalidade:
         if not isinstance(modalidade, Modalidade):
@@ -74,6 +85,11 @@ class ModalidadeService:
         if not isinstance(codigo, int):
             raise TypeError("O código informado é inválido")
 
+        if self.__buscar_matricula(codigo):
+            raise ValueError(
+                "A modalidade informada possui vínculo a uma matrícula, portanto para excluí-la você deve primeiro excluir sua matrícula."
+            )
+
         registro_excluido = self.__repositorio_modalidades.excluir(codigo)
 
         return Modalidade.dict_para_objeto(registro_excluido)
@@ -88,3 +104,10 @@ class ModalidadeService:
             return None
 
         return Professor.dict_para_objeto(registro)
+
+    def __buscar_matricula(self, cod_modalidade: int) -> bool:
+        for registro in self.__repositorio_matriculas.listar():
+            if registro["cod_modalidade"] == cod_modalidade:
+                return True
+
+        return False

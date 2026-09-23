@@ -18,12 +18,11 @@ repositorio_professores = Repositorio(TipoRepositorio.PROFESSOR)
 repositorio_modalidades = Repositorio(TipoRepositorio.MODALIDADE)
 repositorio_matriculas = Repositorio(TipoRepositorio.MATRICULA)
 
-aluno_service = AlunoService(repositorio_alunos)
-professor_service = ProfessorService(repositorio_professores)
+aluno_service = AlunoService(repositorio_alunos, repositorio_matriculas)
+professor_service = ProfessorService(repositorio_professores, repositorio_modalidades)
 
 modalidade_service = ModalidadeService(
-    repositorio_modalidades,
-    repositorio_professores,
+    repositorio_modalidades, repositorio_professores, repositorio_matriculas
 )
 
 matricula_service = MatriculaService(
@@ -40,7 +39,7 @@ faturamento_service = FaturamentoService(
 janela = ctk.CTk()
 janela.title("PowerOn — Gerenciador de Academia")
 janela.geometry("1100x700")
-janela.minsize(950, 650)
+janela.minsize(1100, 700)
 
 janela.grid_rowconfigure(0, weight=1)
 janela.grid_columnconfigure(0, weight=1)
