@@ -66,6 +66,7 @@ class ProfessorView(ctk.CTkFrame):
             self,
             text="",
             anchor="w",
+            justify="left",
             wraplength=700,
         )
         self.__feedback.grid(row=3, column=0, padx=35, pady=(5, 25), sticky="ew")

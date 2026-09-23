@@ -67,6 +67,7 @@ class AlunoView(ctk.CTkFrame):
             self,
             text="",
             anchor="w",
+            justify="left",
             wraplength=700,
         )
         self.__feedback.grid(row=3, column=0, padx=35, pady=(5, 25), sticky="ew")
@@ -221,7 +222,8 @@ class AlunoView(ctk.CTkFrame):
             self.__aluno_service.criar(aluno)
             self.__limpar_formulario()
             self.__mostrar_feedback(
-                f"Aluno {aluno.nome} incluído com sucesso.", sucesso=True
+                f"Aluno {aluno.nome} incluído com sucesso - IMC: {Formatador.decimal(aluno.calcular_imc())} ({aluno.diagnosticar_imc()})",
+                sucesso=True,
             )
         except (TypeError, ValueError, OSError) as erro:
             self.__mostrar_feedback(str(erro), sucesso=False)
@@ -270,8 +272,8 @@ class AlunoView(ctk.CTkFrame):
             )
             self.__aluno_selecionado = aluno_atualizado
             self.__mostrar_feedback(
-                f"Aluno {aluno_atualizado.nome} atualizado com sucesso.",
-                sucesso=True,
+                f"Aluno {aluno_atualizado.nome} atualizado com sucesso - IMC: {Formatador.decimal(aluno_atualizado.calcular_imc())} ({aluno_atualizado.diagnosticar_imc()})",
+                True,
             )
         except (TypeError, ValueError, OSError) as erro:
             self.__mostrar_feedback(str(erro), sucesso=False)
