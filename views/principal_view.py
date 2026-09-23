@@ -46,7 +46,7 @@ class PrincipalView(ctk.CTkFrame):
     def __criar_menu(self) -> None:
         self.__menu = ctk.CTkFrame(
             self,
-            width=210,
+            width=280,
             corner_radius=0,
         )
         self.__menu.grid(
@@ -83,7 +83,8 @@ class PrincipalView(ctk.CTkFrame):
                 text=f"      {nome}",
                 anchor="w",
                 height=42,
-                fg_color="transparent",
+                fg_color="#000",
+                text_color="#fff",
                 command=lambda nome_view=nome: self.__mostrar_view(nome_view),
             )
             botao.grid(
@@ -154,10 +155,6 @@ class PrincipalView(ctk.CTkFrame):
 
         for nome_botao, botao in self.__botoes.items():
             if nome_botao == nome:
-                botao.configure(
-                    fg_color=("gray75", "gray25"),
-                )
+                botao.configure(fg_color="#fff", text_color="#000")
             else:
-                botao.configure(
-                    fg_color="transparent",
-                )
+                botao.configure(fg_color="#000", text_color="#fff")
