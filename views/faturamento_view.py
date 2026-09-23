@@ -62,10 +62,7 @@ class FaturamentoView(ctk.CTkFrame):
             sticky="w",
         )
 
-        self.__campo_codigo = ctk.CTkEntry(
-            busca,
-            placeholder_text="Ex.: 1",
-        )
+        self.__campo_codigo = ctk.CTkEntry(busca, placeholder_text="Ex.: 1", height=38)
         self.__campo_codigo.grid(
             row=0,
             column=1,
@@ -79,10 +76,7 @@ class FaturamentoView(ctk.CTkFrame):
         )
 
         ctk.CTkButton(
-            busca,
-            text="Calcular",
-            command=self.__calcular,
-            width=110,
+            busca, text="Calcular", command=self.__calcular, width=110, height=38
         ).grid(
             row=0,
             column=2,

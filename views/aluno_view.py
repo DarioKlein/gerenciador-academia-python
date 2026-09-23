@@ -47,6 +47,7 @@ class AlunoView(ctk.CTkFrame):
             self,
             values=list(self.OPERACOES),
             command=self.__selecionar_operacao,
+            height=38,
         )
         self.__seletor_operacao.grid(
             row=1, column=0, padx=30, pady=(5, 10), sticky="ew"
@@ -114,11 +115,11 @@ class AlunoView(ctk.CTkFrame):
             row=0, column=0, padx=(0, 10), sticky="w"
         )
 
-        self.__campo_busca = ctk.CTkEntry(busca, placeholder_text="Ex.: 1")
+        self.__campo_busca = ctk.CTkEntry(busca, placeholder_text="Ex.: 1", height=38)
         self.__campo_busca.grid(row=0, column=1, padx=10, sticky="ew")
         self.__campo_busca.bind("<Return>", lambda _evento: comando())
 
-        ctk.CTkButton(busca, text="Buscar", command=comando, width=110).grid(
+        ctk.CTkButton(busca, text="Buscar", command=comando, width=110, height=38).grid(
             row=0, column=2, padx=(10, 0)
         )
         self.__campo_busca.focus()
@@ -155,7 +156,7 @@ class AlunoView(ctk.CTkFrame):
                 sticky="w",
             )
 
-            campo = ctk.CTkEntry(formulario, placeholder_text=placeholder)
+            campo = ctk.CTkEntry(formulario, placeholder_text=placeholder, height=38)
             campo.grid(row=linha, column=1, pady=8, sticky="ew")
             self.__campos_formulario[chave] = campo
 
@@ -281,11 +282,12 @@ class AlunoView(ctk.CTkFrame):
 
             ctk.CTkButton(
                 self.__area_operacao,
-                text="Confirmar exclusão",
+                text="     Confirmar exclusão     ",
                 command=self.__excluir,
                 height=38,
                 fg_color="#b91c1c",
                 hover_color="#991b1b",
+                text_color="#fff",
             ).grid(row=1, column=0, padx=20, pady=(15, 0), sticky="e")
 
             self.__mostrar_feedback(
