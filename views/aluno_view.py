@@ -9,7 +9,7 @@ from utils import Conversor, Formatador
 
 
 class AlunoView(ctk.CTkFrame):
-    OPERACOES = ("Incluir", "Buscar", "Atualizar", "Excluir")
+    OPERACOES = ("Listar", "Incluir", "Buscar", "Atualizar", "Excluir")
 
     def __init__(self, master, aluno_service: AlunoService):
         super().__init__(master, fg_color="transparent")
@@ -28,7 +28,7 @@ class AlunoView(ctk.CTkFrame):
         self.__criar_cabecalho()
         self.__criar_area_conteudo()
         self.__criar_area_feedback()
-        self.__selecionar_operacao("Incluir")
+        self.__selecionar_operacao("Listar")
 
     def __criar_cabecalho(self) -> None:
         cabecalho = ctk.CTkFrame(self, fg_color="transparent")
@@ -55,7 +55,7 @@ class AlunoView(ctk.CTkFrame):
         self.__seletor_operacao.grid(
             row=1, column=0, padx=30, pady=(5, 10), sticky="ew"
         )
-        self.__seletor_operacao.set("Incluir")
+        self.__seletor_operacao.set("Listar")
 
     def __criar_area_conteudo(self) -> None:
         self.__conteudo = ctk.CTkFrame(self)
@@ -77,16 +77,66 @@ class AlunoView(ctk.CTkFrame):
         self.__campos_formulario = {}
         self.__campo_busca = None
         self.__limpar_conteudo()
+
+        self.__conteudo.grid_rowconfigure(0, weight=0)
+
         self.__mostrar_feedback("")
         self.__titulo.configure(text=f"Gerenciamento de Alunos — {operacao}")
 
         acoes = {
+            "Listar": self.__montar_listagem,
             "Incluir": self.__montar_inclusao,
             "Buscar": self.__montar_busca,
             "Atualizar": self.__montar_atualizacao,
             "Excluir": self.__montar_exclusao,
         }
         acoes[operacao]()
+
+    def __montar_listagem(self) -> None:
+        alunos = self.__aluno_service.listar()
+
+        if not alunos:
+            ctk.CTkLabel(
+                self.__conteudo,
+                text="Nenhum aluno cadastrado no momento.",
+                font=ctk.CTkFont(size=16),
+                text_color="#fff",
+            ).grid(row=0, column=0, padx=20, pady=30)
+            return
+
+        tabela = ctk.CTkScrollableFrame(self.__conteudo, height=450)
+        tabela.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
+        self.__conteudo.grid_rowconfigure(0, weight=1)
+
+        colunas = (
+            " Código",
+            " Nome",
+            " Nascimento",
+            " Peso",
+            " Altura",
+            " IMC",
+            " Diagnóstico",
+        )
+        for col_idx, rotulo in enumerate(colunas):
+            tabela.grid_columnconfigure(col_idx, weight=1)
+            ctk.CTkLabel(
+                tabela, text=rotulo, font=ctk.CTkFont(weight="bold"), anchor="w"
+            ).grid(row=0, column=col_idx, padx=10, pady=8, sticky="w")
+
+        for linha_idx, aluno in enumerate(alunos, start=1):
+            valores = (
+                f"        {str(aluno.codigo)}",
+                aluno.nome,
+                aluno.data_nascimento.strftime("%d/%m/%Y"),
+                f"{Formatador.decimal(aluno.peso)} kg",
+                f"{Formatador.decimal(aluno.altura)} m",
+                Formatador.decimal(aluno.calcular_imc()),
+                aluno.diagnosticar_imc(),
+            )
+            for col_idx, valor in enumerate(valores):
+                ctk.CTkLabel(tabela, text=valor, anchor="w").grid(
+                    row=linha_idx, column=col_idx, padx=10, pady=6, sticky="w"
+                )
 
     def __montar_inclusao(self) -> None:
         self.__criar_formulario(self.__conteudo)
