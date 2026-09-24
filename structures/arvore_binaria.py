@@ -70,3 +70,17 @@ class ArvoreBinaria:
                 raiz.posicao = aux.posicao
                 raiz.direita = ArvoreBinaria.excluir(raiz.direita, aux.codigo)
         return raiz
+
+    @staticmethod
+    def listar_em_ordem(raiz: No | None) -> list[No]:
+        nos: list[No] = []
+
+        def _percorrer(atual: No | None) -> None:
+            if atual is not None:
+                _percorrer(atual.esquerda)
+                nos.append(atual)
+                _percorrer(atual.direita)
+
+        _percorrer(raiz)
+
+        return nos

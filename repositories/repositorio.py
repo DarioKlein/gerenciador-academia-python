@@ -65,13 +65,14 @@ class Repositorio:
         return registro
 
     def listar(self) -> list[dict]:
+        nos_ordenados = ArvoreBinaria.listar_em_ordem(self.raiz)
         registros = []
 
         with open(self.caminho, "r", encoding="utf-8") as arquivo:
-            for linha in arquivo:
-                if linha.startswith("1|"):
-                    registro = json.loads(linha[2:])
-                    registros.append(registro)
+            for no in nos_ordenados:
+                arquivo.seek(no.posicao)
+                linha = arquivo.readline()
+                registros.append(json.loads(linha[2:]))
 
         return registros
 
