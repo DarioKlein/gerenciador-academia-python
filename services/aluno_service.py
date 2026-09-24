@@ -22,6 +22,16 @@ class AlunoService:
         self.__repositorio_alunos = repositorio_alunos
         self.__repositorio_matriculas = repositorio_matriculas
 
+    def listar(self) -> list[Aluno]:
+        alunos = []
+
+        alunos_dict = self.__repositorio_alunos.listar()
+
+        for aluno in alunos_dict:
+            alunos.append(Aluno.dict_para_objeto(aluno))
+
+        return alunos
+
     def criar(self, aluno: Aluno) -> Aluno:
         if not isinstance(aluno, Aluno):
             raise TypeError("O aluno informado é inválido")

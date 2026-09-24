@@ -32,6 +32,16 @@ class ModalidadeService:
         self.__repositorio_professores = repositorio_professores
         self.__repositorio_matriculas = repositorio_matriculas
 
+    def listar(self) -> list[Modalidade]:
+        modalidades = []
+
+        modalidades_dict = self.__repositorio_modalidades.listar()
+
+        for modalidade in modalidades_dict:
+            modalidades.append(Modalidade.dict_para_objeto(modalidade))
+
+        return modalidades
+
     def criar(self, modalidade: Modalidade) -> Modalidade:
         if not isinstance(modalidade, Modalidade):
             raise TypeError("A modalidade informada é inválida")

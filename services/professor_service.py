@@ -21,6 +21,16 @@ class ProfessorService:
         self.__repositorio_professores = repositorio_professores
         self.__repositorio_modalidades = repositorio_modalidades
 
+    def listar(self) -> list[Professor]:
+        professores = []
+
+        professores_dict = self.__repositorio_professores.listar()
+
+        for professor in professores_dict:
+            professores.append(Professor.dict_para_objeto(professor))
+
+        return professores
+
     def criar(self, professor: Professor) -> Professor:
         if not isinstance(professor, Professor):
             raise TypeError("O professor informado é inválido")

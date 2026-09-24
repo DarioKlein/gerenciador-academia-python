@@ -32,6 +32,16 @@ class MatriculaService:
         self.__repositorio_alunos = repositorio_alunos
         self.__repositorio_modalidades = repositorio_modalidades
 
+    def listar(self) -> list[Matricula]:
+        matriculas = []
+
+        matriculas_dict = self.__repositorio_matriculas.listar()
+
+        for matricula in matriculas_dict:
+            matriculas.append(Matricula.dict_para_objeto(matricula))
+
+        return matriculas
+
     def criar(self, matricula: Matricula) -> Matricula:
         if not isinstance(matricula, Matricula):
             raise TypeError("A matrícula informada é inválida")
