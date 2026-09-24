@@ -38,8 +38,8 @@ faturamento_service = FaturamentoService(
 
 janela = ctk.CTk()
 janela.title("PowerOn — Gerenciador de Academia")
-janela.geometry("1100x700")
-janela.minsize(1100, 700)
+janela.geometry("1200x700")
+janela.minsize(1200, 700)
 
 janela.grid_rowconfigure(0, weight=1)
 janela.grid_columnconfigure(0, weight=1)
