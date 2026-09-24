@@ -109,23 +109,23 @@ class AlunoView(ctk.CTkFrame):
         self.__conteudo.grid_rowconfigure(0, weight=1)
 
         colunas = (
-            " Código",
-            " Nome",
-            " Nascimento",
-            " Peso",
-            " Altura",
-            " IMC",
-            " Diagnóstico",
+            "Código",
+            "Nome",
+            "Nascimento",
+            "Peso",
+            "Altura",
+            "IMC",
+            "Diagnóstico",
         )
         for col_idx, rotulo in enumerate(colunas):
             tabela.grid_columnconfigure(col_idx, weight=1)
             ctk.CTkLabel(
-                tabela, text=rotulo, font=ctk.CTkFont(weight="bold"), anchor="w"
-            ).grid(row=0, column=col_idx, padx=10, pady=8, sticky="w")
+                tabela, text=rotulo, font=ctk.CTkFont(weight="bold"), anchor="center"
+            ).grid(row=0, column=col_idx, padx=10, pady=8, sticky="ew")
 
         for linha_idx, aluno in enumerate(alunos, start=1):
             valores = (
-                f"        {str(aluno.codigo)}",
+                str(aluno.codigo),
                 aluno.nome,
                 aluno.data_nascimento.strftime("%d/%m/%Y"),
                 f"{Formatador.decimal(aluno.peso)} kg",
@@ -134,8 +134,8 @@ class AlunoView(ctk.CTkFrame):
                 aluno.diagnosticar_imc(),
             )
             for col_idx, valor in enumerate(valores):
-                ctk.CTkLabel(tabela, text=valor, anchor="w").grid(
-                    row=linha_idx, column=col_idx, padx=10, pady=6, sticky="w"
+                ctk.CTkLabel(tabela, text=valor, anchor="center").grid(
+                    row=linha_idx, column=col_idx, padx=10, pady=6, sticky="ew"
                 )
 
     def __montar_inclusao(self) -> None:
