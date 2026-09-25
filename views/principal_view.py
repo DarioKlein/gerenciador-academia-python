@@ -30,6 +30,7 @@ class PrincipalView(ctk.CTkFrame):
         self.grid_columnconfigure(1, weight=1)
 
         self.__botoes: dict[str, ctk.CTkButton] = {}
+        self.__view_atual: str | None = None
 
         self.__criar_menu()
         self.__criar_area_conteudo()
@@ -152,6 +153,11 @@ class PrincipalView(ctk.CTkFrame):
 
     def __mostrar_view(self, nome: str) -> None:
         view = self.__views[nome]
+
+        if nome != self.__view_atual:
+            view.reiniciar()
+            self.__view_atual = nome
+
         view.tkraise()
 
         for nome_botao, botao in self.__botoes.items():

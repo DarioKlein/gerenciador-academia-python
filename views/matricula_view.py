@@ -29,6 +29,10 @@ class MatriculaView(ctk.CTkFrame):
         self.__criar_area_feedback()
         self.__selecionar_operacao("Listar")
 
+    def reiniciar(self) -> None:
+        self.__seletor_operacao.set("Listar")
+        self.__selecionar_operacao("Listar")
+
     def __criar_cabecalho(self) -> None:
         cabecalho = ctk.CTkFrame(self, fg_color="transparent")
         cabecalho.grid(row=0, column=0, padx=30, pady=(30, 10), sticky="ew")

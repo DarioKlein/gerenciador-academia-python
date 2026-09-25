@@ -22,6 +22,12 @@ class FaturamentoView(ctk.CTkFrame):
         self.__criar_area_resultado()
         self.__criar_area_feedback()
 
+    def reiniciar(self) -> None:
+        self.__campo_codigo.delete(0, "end")
+        self.__limpar_resultado()
+        self.__mostrar_feedback("")
+        self.__campo_codigo.focus()
+
     def __criar_cabecalho(self) -> None:
         cabecalho = ctk.CTkFrame(self, fg_color="transparent")
         cabecalho.grid(
